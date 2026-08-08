@@ -42,7 +42,24 @@ export default function App() {
   const [stats, setStats] = useState<UserStats>(() => {
     try {
       const saved = localStorage.getItem("casino_ege_stats_v1");
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          ...INITIAL_STATS,
+          ...parsed,
+          chips: typeof parsed.chips === "number" ? parsed.chips : INITIAL_STATS.chips,
+          xp: typeof parsed.xp === "number" ? parsed.xp : INITIAL_STATS.xp,
+          equippedTheme: parsed.equippedTheme || "gold",
+          boosters: {
+            ...INITIAL_STATS.boosters,
+            ...(parsed.boosters || {}),
+          },
+          taskStats: {
+            ...INITIAL_STATS.taskStats,
+            ...(parsed.taskStats || {}),
+          },
+        };
+      }
     } catch {
       // Fallback
     }
