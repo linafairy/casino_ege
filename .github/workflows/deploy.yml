@@ -12,7 +12,6 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: font-bold
   cancel-in-progress: true
 
 jobs:
